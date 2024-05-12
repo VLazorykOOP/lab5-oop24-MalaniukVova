@@ -111,20 +111,13 @@ public:
     }
 };
 
-class DesktopComputer : public Computer {
-private:
-    Monitor* monitor;
-
+class DesktopComputer : public Computer, public Monitor {
 public:
-    DesktopComputer(string* brandPtr, double cost, HardDrive* hd, int monitorSize) : Computer(brandPtr, cost, hd), monitor(new Monitor(monitorSize)) {}
-
-    ~DesktopComputer() {
-        delete monitor;
-    }
+    DesktopComputer(string* brandPtr, double cost, HardDrive* hd, int monitorSize) : Computer(brandPtr, cost, hd), Monitor(monitorSize) {}
 
     void printInfo() const {
         Computer::printInfo();
-        cout << "Monitor Size: " << monitor->getSize() << " inches" << endl;
+        cout << "Monitor Size: " << getSize() << " inches" << endl;
     }
 };
 
