@@ -80,22 +80,20 @@ public:
     }
 };
 
-class Computer {
+class Computer : public HardDrive {
 private:
     string* brand;
     double price;
-    HardDrive* hardDrive;
 
 public:
-    Computer(string* brandPtr, double cost, HardDrive* hd) : brand(brandPtr), price(cost), hardDrive(hd) {}
+    Computer(string* brandPtr, double cost, int volume) : HardDrive(volume), brand(brandPtr), price(cost) {}
 
     ~Computer() {
         delete brand;
-        delete hardDrive;
     }
 
     void printInfo() const {
-        cout << "Brand: " << *brand << ", Price: $" << price << ", Hard Drive Volume: " << hardDrive->getVolume() << "MB" << endl;
+        cout << "Brand: " << *brand << ", Price: $" << price << ", Hard Drive Volume: " << getVolume() << "MB" << endl;
     }
 };
 
@@ -113,7 +111,7 @@ public:
 
 class DesktopComputer : public Computer, public Monitor {
 public:
-    DesktopComputer(string* brandPtr, double cost, HardDrive* hd, int monitorSize) : Computer(brandPtr, cost, hd), Monitor(monitorSize) {}
+    DesktopComputer(string* brandPtr, double cost, int volume, int monitorSize) : Computer(brandPtr, cost, volume), Monitor(monitorSize) {}
 
     void printInfo() const {
         Computer::printInfo();
@@ -124,8 +122,7 @@ public:
 int main() {
     string brandName = "Example Brand";
     string* brandPtr = &brandName;
-    HardDrive* hd = new HardDrive(500); // 500MB hard drive
-    DesktopComputer desktop(brandPtr, 999.99, hd, 27); // 27-inch monitor
+    DesktopComputer desktop(brandPtr, 999.99, 500, 27); // 27-inch monitor, 500MB hard drive
 
     desktop.printInfo();
 
